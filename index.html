@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CalSync</title>
+<meta name="description" content="CalSync keeps you showing as busy on all your Google calendars. Privacy policy.">
+<style>
+  :root { --bg: #ffffff; --fg: #1d1d1f; --muted: #5a5a60; --rule: #e3e3e6; --link: #0b5bd3; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161618; --fg: #ececee; --muted: #a3a3aa; --rule: #2e2e33; --link: #7fb0ff; }
+  }
+  html { background: var(--bg); }
+  body { margin: 0 auto; max-width: 42rem; padding: 3rem 16px 4rem; color: var(--fg);
+         font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  h1 { font-size: 2rem; margin: 0 0 .25rem; }
+  h2 { font-size: 1.35rem; margin: 2.5rem 0 .5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+  h3 { font-size: 1.05rem; margin: 1.75rem 0 .25rem; }
+  p.lede { color: var(--muted); margin-top: 0; }
+  a { color: var(--link); }
+  code { font: .9em ui-monospace, SFMono-Regular, Menlo, monospace; }
+  ul { padding-left: 1.25rem; }
+  footer { margin-top: 3rem; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+
+<h1>CalSync</h1>
+<p class="lede">Keeps you showing as busy on all your Google calendars.</p>
+
+<p>For every real event on one of your calendars, CalSync writes a private "Busy" block
+to your other calendars and keeps it current. Only the time is shared: titles,
+attendees, and descriptions are never even requested from Google.</p>
+
+<p>It's for people who juggle several Google accounts (their own company, clients, a
+school, a personal Gmail) and want each one to show when they're actually free.
+CalSync runs on the user's own always-on computer, such as a Raspberry Pi. There is no
+CalSync cloud service.</p>
+
+<h2 id="privacy">Privacy policy</h2>
+
+<p>CalSync is software that each person runs on their own computer, with their own
+Google Cloud project. There is no CalSync service: its authors never receive, see, or
+store your data.</p>
+
+<h3>What CalSync reads from Google</h3>
+<p>For each connected calendar, CalSync asks Google only for these fields of each event:</p>
+<ul>
+  <li>its id and, for recurring events, the series id</li>
+  <li>its start and end time</li>
+  <li>whether it's cancelled, and whether it's marked busy or free</li>
+  <li>its event type (for example, out of office)</li>
+  <li>your own answer to an invite (accepted, declined, maybe, or unanswered), and whether you're the organizer</li>
+  <li>CalSync's own private marker, which identifies the Busy blocks it created</li>
+</ul>
+<p>It never requests titles, descriptions, locations, attachments, conference links, or
+other attendees' names or addresses. It also reads your account's email address once,
+at sign-in, to confirm you signed in to the right account.</p>
+
+<h3>What CalSync writes to Google</h3>
+<p>CalSync creates, updates, and deletes private events titled "Busy" on your connected
+calendars, one for each real event elsewhere. Each carries only a time and a hidden
+marker: a short account id (such as <code>c01</code>) and the original event's id. It
+never changes or deletes any event it didn't create.</p>
+
+<h3>What stays on your computer</h3>
+<ul>
+  <li>The sign-in tokens for each account, readable only by your user.</li>
+  <li>Your config file, with account labels and email addresses.</li>
+  <li>A small status file with the time and result of the last sync.</li>
+  <li>Logs, which show account ids, event ids, and times, never titles.</li>
+</ul>
+<p>None of this is sent anywhere except to Google's Calendar API. If a health-check
+address is configured, CalSync also sends an empty ping to it after each successful
+sync. The ping contains no calendar data.</p>
+
+<h3>Your control</h3>
+<p>You can stop CalSync at any time by turning off its schedule, and remove its access
+to any account at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.
+CalSync's <code>offboard</code> command removes every Busy block it created from an account.</p>
+
+<p>CalSync's use of information received from Google APIs adheres to the
+<a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
+including the Limited Use requirements.</p>
+
+<h3>Contact</h3>
+<p>Questions about this policy can be raised as an issue at
+<a href="https://github.com/gstout52/calsync-site/issues">github.com/gstout52/calsync-site/issues</a>.</p>
+
+<footer>Last updated November 20, 2026.</footer>
+
+</body>
+</html>
